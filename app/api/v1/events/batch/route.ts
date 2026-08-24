@@ -1,9 +1,15 @@
+import { env } from 'cloudflare:workers';
 import { ensureSchema } from '@/lib/d1';
 import { stableEventId } from '@/lib/rating';
 
 type InputEvent = { type?: string; playerId?: string; payload?: Record<string, unknown> };
 
 export async function POST(request: Request) {
+  const ingestKey = (env as unknown as { GAMEPULSE_INGEST_KEY?: string }).GAMEPULSE_INGEST_KEY;
+  if (!ingestKey) return Response.json({ error: 'event ingestion is disabled for this demo' }, { status: 503 });
+  if (request.headers.get('X-API-Key') !== ingestKey) {
+    return Response.json({ error: 'invalid API key' }, { status: 401 });
+  }
   const key = request.headers.get('Idempotency-Key');
   if (!key) return Response.json({ error: 'Idempotency-Key header is required' }, { status: 400 });
   const body = await request.json() as { events?: InputEvent[] };

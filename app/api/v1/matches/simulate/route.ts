@@ -3,6 +3,12 @@ import { eloDelta } from '@/lib/rating';
 
 export async function POST() {
   const db = await ensureSchema();
+  const dayStart = new Date();
+  dayStart.setUTCHours(0, 0, 0, 0);
+  const usage = await db.prepare('SELECT COUNT(*) AS count FROM matches WHERE created_at >= ?').bind(dayStart.toISOString()).first<{ count: number }>();
+  if ((usage?.count ?? 0) >= 250) {
+    return Response.json({ error: 'daily demo write limit reached' }, { status: 429 });
+  }
   const winner = { id: 'player_nova', name: 'NovaFox', rating: 2840 };
   const loser = { id: 'player_demo', name: 'DemoPlayer', rating: 1500 };
   const { winnerDelta, loserDelta } = eloDelta(winner.rating, loser.rating);

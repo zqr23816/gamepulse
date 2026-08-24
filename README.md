@@ -30,6 +30,7 @@ FastAPI validation ── API key boundary
 - 明确事务边界：`BEGIN IMMEDIATE` 将“幂等检查—事件写入—结果落库”放在同一写事务中。
 - 领域逻辑隔离：Elo 更新与稳定事件 ID 是无副作用函数，可独立单元测试。
 - API 防护：API Key、Pydantic 校验、批量大小上限和分页上限。
+- 在线 Demo 默认关闭外部批量写入，并限制每日模拟写入量，避免公开演示数据库被滥用。
 - 可交付工程：Dockerfile、GitHub Actions、SQLite 索引、健康检查、自动生成 OpenAPI 文档。
 - 双运行时演示：FastAPI 适合常规容器部署；公开 Dashboard 使用 Worker + D1 以获得低运维在线体验。
 
