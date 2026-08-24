@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gamepulse-api"
+version = "1.0.0"
+description = "Idempotent game telemetry and leaderboard API"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi==0.141.1",
+  "uvicorn[standard]==0.52.4",
+]
+
+[tool.setuptools.packages.find]
+include = ["gamepulse*"]
+
