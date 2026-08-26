@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'GamePulse — Game Telemetry Platform',
-  description: 'Realtime game telemetry, player analytics, and competitive leaderboards.',
+  title: 'GamePulse — 游戏遥测与竞技数据平台',
+  description: '面向多人游戏的实时遥测、玩家分析与竞技排行榜平台。',
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-[#08111f]">
+    <html lang="zh-CN" className="bg-[#08111f]">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
